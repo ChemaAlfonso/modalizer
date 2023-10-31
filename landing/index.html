@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modalizer JS</title>
+	<meta name="title" content="Modalizer JS">
+	<meta name="description" content="Modalizer JS">
+	<link rel="stylesheet" href="../dist/assets/styles/styles.css">
+	<link rel="stylesheet" href="../dist/assets/styles/animate.css">
+	<link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+
+	<a target="_blank" href="https://github.com/ChemaAlfonso/modalizer" class="github">
+		<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
+	</a>
+	<div class="corner"></div>
+
+	<menu class="menu">
+		<ul>
+			<li><img src="https://img.shields.io/badge/-V%200.0.1-6749e3"></li>
+			<li><a href="#examples">Examples</a></li>
+			<li><a href="#usage">Usage</a></li>
+			<li><a target="_blank" href="https://github.com/ChemaAlfonso/modalizer">View on Github</a></li>
+		</ul>
+	</menu>
+
+	<div class="presentation">
+		<h1 class="title">Modalizer</h1>
+		<h2 class="subtitle">Simplify Modal Creation in Your Projects</h2>
+		<p class="content">Generate attractive native modals efficiently.</p>
+
+		<div class="features">
+			<h3 class="subtitle">Reasons to Choose Modalizer:</h3>
+			<ul class="content">
+				<li><b>Native</b>: Keep the native way using native dialog html element.</li>
+				<li><b>Ease of Use</b>: Implement modals in minutes with a simple and user-friendly API.</li>
+				<li><b>Quick Customization</b>: Adapt the appearance of your modals to fit your project.</li>
+				<li><b>Custom HTML Content</b>: Effortlessly load any HTML content into your modals.</li>
+				<li><b>Compatible animations</b>: Compatible with <a target="_blank"
+						href="https://animate.style/">Animate.css</a> animations</li>
+				<li><b>Customizable animations</b>: Make your own and use custom animations</li>
+				<li><b>Created in TypeScript</b>: Modalizer is designed for use in TypeScript and JavaScript
+					projects.</li>
+				<li>Only <b>4.3kb</b></li>
+				<li><b>Responsive</b>: Native elements fits your needs on every screen</li>
+				<li><b>Free use</b>: MIT licensed</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="examples">
+		<div class="block">
+			<button class="my-trigger my-trigger--1">
+				Open modal
+			</button>
+		</div>
+
+		<div class="block">
+
+			<!-- Modal example 1 -->
+			<div class="my-content my-content--1">
+				<h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
+					eius
+					adipisci iste nisi beatae.</p>
+				<button class="my-closer my-closer--1">Close</button>
+			</div>
+
+			<script type="module">
+				import { Modalizer } from '../dist/modalizer.js'
+
+				document.addEventListener('DOMContentLoaded', () => {
+					const target = document.querySelector('.my-content--1')
+					const trigger = document.querySelector('.my-trigger--1')
+					const closer = document.querySelector('.my-closer--1')
+
+					const modalizable = {
+						element: target,
+						trigger,
+						config: {
+							animationIn: 'fadeInUp',
+							animationOut: 'fadeOutDown',
+							closer
+						}
+					}
+
+					new Modalizer([modalizable])
+				})
+			</script>
+		</div>
+
+		<div class="block">
+
+			<div class="presentation presentation--2">
+				<h2 class="subtitle">Simply customize open & close animations</h2>
+				<p class="content">Use <a target="_blank" href="https://animate.style/">Animate.css</a> animations or
+					create your own.</p>
+
+				<div class="animation-selects">
+					<div>
+						<label for="animationIn">Animation IN</label>
+						<select name="animation" id="animationIn">
+							<option value="backInDown">backInDown</option>
+							<option value="backInLeft">backInLeft</option>
+							<option value="backInRight">backInRight</option>
+							<option value="backInUp">backInUp</option>
+							<option value="bounceIn">bounceIn</option>
+							<option value="bounceInDown">bounceInDown</option>
+							<option value="bounceInLeft">bounceInLeft</option>
+							<option value="bounceInRight">bounceInRight</option>
+							<option value="bounceInUp">bounceInUp</option>
+							<option value="fadeIn">fadeIn</option>
+							<option value="fadeInDown">fadeInDown</option>
+							<option value="fadeInDownBig">fadeInDownBig</option>
+							<option value="fadeInLeft">fadeInLeft</option>
+							<option value="fadeInLeftBig">fadeInLeftBig</option>
+							<option value="fadeInRight">fadeInRight</option>
+							<option value="fadeInRightBig">fadeInRightBig</option>
+							<option value="fadeInUp">fadeInUp</option>
+							<option value="fadeInUpBig">fadeInUpBig</option>
+							<option value="fadeInTopLeft">fadeInTopLeft</option>
+							<option value="fadeInTopRight">fadeInTopRight</option>
+							<option value="fadeInBottomLeft">fadeInBottomLeft</option>
+							<option value="fadeInBottomRight">fadeInBottomRight</option>
+							<option value="flip">flip</option>
+							<optio value="flipInX">flipInX</option>
+								<option value="flipInY">flipInY</option>
+								<option value="lightSpeedInRight">lightSpeedInRight</option>
+								<option selected value="lightSpeedInLeft">lightSpeedInLeft</option>
+								<option value="rotateIn">rotateIn</option>
+								<option value="rotateInDownLeft">rotateInDownLeft</option>
+								<option value="rotateInDownRight">rotateInDownRight</option>
+								<option value="rotateInUpLeft">rotateInUpLeft</option>
+								<option value="rotateInUpRight">rotateInUpRight</option>
+								<option value="jackInTheBox">jackInTheBox</option>
+								<option value="rollIn">rollIn</option>
+								<option value="zoomIn">zoomIn</option>
+								<option value="zoomInDown">zoomInDown</option>
+								<option value="zoomInLeft">zoomInLeft</option>
+								<option value="zoomInRight">zoomInRight</option>
+								<option value="zoomInUp">zoomInUp</option>
+								<option value="slideInDown">slideInDown</option>
+								<option value="slideInLeft">slideInLeft</option>
+								<option value="slideInRight">slideInRight</option>
+								<option value="slideInUp">slideInUp</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="animationOut">Animation OUT</label>
+						<select name="animation" id="animationOut">
+							<option value="backOutDown">backOutDown</option>
+							<option value="backOutLeft">backOutLeft</option>
+							<option value="backOutRight">backOutRight</option>
+							<option value="backOutUp">backOutUp</option>
+							<option value="bounceOut">bounceOut</option>
+							<option value="bounceOutDown">bounceOutDown</option>
+							<option value="bounceOutLeft">bounceOutLeft</option>
+							<option value="bounceOutRight">bounceOutRight</option>
+							<option value="bounceOutUp">bounceOutUp</option>
+							<option value="fadeOut">fadeOut</option>
+							<option value="fadeOutDown">fadeOutDown</option>
+							<option value="fadeOutDownBig">fadeOutDownBig</option>
+							<option value="fadeOutLeft">fadeOutLeft</option>
+							<option value="fadeOutLeftBig">fadeOutLeftBig</option>
+							<option value="fadeOutRight">fadeOutRight</option>
+							<option value="fadeOutRightBig">fadeOutRightBig</option>
+							<option value="fadeOutUp">fadeOutUp</option>
+							<option value="fadeOutUpBig">fadeOutUpBig</option>
+							<option value="fadeOutTopLeft">fadeOutTopLeft</option>
+							<option value="fadeOutTopRight">fadeOutTopRight</option>
+							<option value="fadeOutBottomRight">fadeOutBottomRight</option>
+							<option value="fadeOutBottomLeft">fadeOutBottomLeft</option>
+							<option value="flip">flip</option>
+							<option selected value="flipOutX">flipOutX</option>
+							<option value="flipOutY">flipOutY</option>
+							<option value="lightSpeedOutRight">lightSpeedOutRight</option>
+							<option value="lightSpeedOutLeft">lightSpeedOutLeft</option>
+							<option value="rotateOut">rotateOut</option>
+							<option value="rotateOutDownLeft">rotateOutDownLeft</option>
+							<option value="rotateOutDownRight">rotateOutDownRight</option>
+							<option value="rotateOutUpLeft">rotateOutUpLeft</option>
+							<option value="rotateOutUpRight">rotateOutUpRight</option>
+							<option value="hinge">hinge</option>
+							<option value="rollOut">rollOut</option>
+							<option value="zoomOut">zoomOut</option>
+							<option value="zoomOutDown">zoomOutDown</option>
+							<option value="zoomOutLeft">zoomOutLeft</option>
+							<option value="zoomOutRight">zoomOutRight</option>
+							<option value="zoomOutUp">zoomOutUp</option>
+							<option value="slideOutDown">slideOutDown</option>
+							<option value="slideOutLeft">slideOutLeft</option>
+							<option value="slideOutRight">slideOutRight</option>
+							<option value="slideOutUp">slideOutUp</option>
+						</select>
+					</div>
+				</div>
+
+				<button class="my-trigger my-trigger--2">
+					Open modal
+				</button>
+			</div>
+
+			<!-- Modal example 2 -->
+			<div class="my-content my-content--2">
+				<h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
+					eius
+					adipisci iste nisi beatae.</p>
+				<button class="my-closer my-closer--2">Close</button>
+			</div>
+
+			<script type="module">
+				import { Modalizer } from '../dist/modalizer.js'
+
+				const animationInSelect = document.querySelector('#animationIn')
+				const animationOutSelect = document.querySelector('#animationOut')
+				const modalizer2 = new Modalizer();
+
+				const createModalizer = () => {
+					modalizer2.reset()
+
+					const target = document.querySelector('.my-content--2')
+					const trigger = document.querySelector('.my-trigger--2')
+					const closer = document.querySelector('.my-closer--2')
+
+					const modalizable = {
+						element: target,
+						trigger,
+						config: {
+							animationIn: animationInSelect.value,
+							animationOut: animationOutSelect.value,
+							closer
+						}
+					}
+
+					modalizer2.add([modalizable])
+				}
+
+
+				document.addEventListener('DOMContentLoaded', createModalizer)
+				animationInSelect.addEventListener('change', createModalizer)
+				animationOutSelect.addEventListener('change', createModalizer)
+			</script>
+
+		</div>
+
+		<div class="block">
+
+			<div class="presentation presentation--3">
+				<h2 class="subtitle">Use your custom styles</h2>
+				<p class="content">Simply customize modal styles as you want.</p>
+				<button class="my-trigger my-trigger--3">
+					Open modal
+				</button>
+			</div>
+
+			<!-- Modal example 3 -->
+			<div class="my-content my-content--3">
+				<h2>🚀 Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
+					eius
+					adipisci iste nisi beatae.</p>
+				<button class="my-closer my-closer--3">Close</button>
+			</div>
+
+			<script type="module">
+				import { Modalizer } from '../dist/modalizer.js'
+
+				document.addEventListener('DOMContentLoaded', () => {
+					const target = document.querySelector('.my-content--3')
+					const trigger = document.querySelector('.my-trigger--3')
+					const closer = document.querySelector('.my-closer--3')
+
+					const modalizable3 = {
+						element: target,
+						trigger,
+						config: {
+							animationIn: 'fadeInUp',
+							animationOut: 'fadeOutDown',
+							closer,
+							customClassName: 'my-modal-3'
+						}
+					}
+
+					new Modalizer([modalizable3])
+				})
+			</script>
+
+		</div>
+
+		<div class="block">
+
+			<div class="presentation presentation--4">
+				<h2 class="subtitle">Modalize what you want</h2>
+				<p class="content">Modalize includes your HTML content into modal.</p>
+				<button class="my-trigger my-trigger--4">
+					Open modal
+				</button>
+			</div>
+
+			<!-- Modal example 4 -->
+			<div class="my-content my-content--4">
+				<h2>🚀 Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
+					eius
+					adipisci iste nisi beatae.</p>
+				<figure>
+					<img lazy="true"
+						src="https://images.unsplash.com/photo-1682685797769-481b48222adf?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						alt="Hisma Desert - NEOM, Saudi Arabia" />
+
+					<figcaption>
+						Hisma Desert - NEOM, Saudi Arabia by <a target="_blank"
+							href="https://unsplash.com/es/@neom">NEOM</a> from <a target="_blank"
+							href="https://unsplash.com/">Unsplash</a>
+					</figcaption>
+				</figure>
+				<div class="buttons">
+					<button class="my-button--3-1">Your action</button>
+					<button class="my-button--3-2 my-closer--4">Close</button>
+				</div>
+			</div>
+
+			<script type="module">
+				import { Modalizer } from '../dist/modalizer.js'
+
+				document.addEventListener('DOMContentLoaded', () => {
+					const target = document.querySelector('.my-content--4')
+					const trigger = document.querySelector('.my-trigger--4')
+					const closer = document.querySelector('.my-closer--4')
+					const exampleButton = document.querySelector('.my-button--3-1')
+
+					const modalizable = {
+						element: target,
+						trigger,
+						config: {
+							animationIn: 'fadeInUp',
+							animationOut: 'fadeOutDown',
+							closer
+						}
+					}
+
+					const modalizer = new Modalizer([modalizable])
+
+					exampleButton.addEventListener('click', () => {
+						modalizer.closeLast()
+						setTimeout(() => {
+							alert('Your action fired!')
+						}, 100);
+					})
+				})
+			</script>
+
+		</div>
+	</div>
+
+	<div id="usage">
+		<h2 class="subtitle">How to install & use</h2>
+		<p>
+			<a target="_blank" href="https://github.com/ChemaAlfonso/modalizer">View on Github</a> to see usage
+		</p>
+	</div>
+
+	<menu class="copy">
+		<ul>
+			<li>Created with ❤️ by <a target="_blank" href="https://github.com/ChemaAlfonso">Chema Alfonso</a></li>
+		</ul>
+	</menu>
+
+</body>
+
+</html>

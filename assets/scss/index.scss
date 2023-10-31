@@ -1,0 +1,49 @@
+@use "mixins";
+@import "animations";
+
+:root {
+	--modalizer-animation-duration: 0.4s;
+}
+
+.modalizer {
+	--animate-duration: var(--modalizer-animation-duration);
+
+	padding: 0;
+	border-width: 0px;
+	animation-duration: var(--modalizer-animation-duration);
+
+	& > * {
+		visibility: hidden;
+		max-width: 95vw;
+	}
+
+	&--initialized {
+		& > * {
+			visibility: visible;
+		}
+	}
+
+	&::backdrop {
+		background-color: #3434349f;
+	}
+
+	&[open] {
+		&::backdrop {
+			@include mixins.fadeInAnimation;
+		}
+	}
+
+	&[closing] {
+		&::backdrop {
+			@include mixins.fadeOutAnimation;
+		}
+	}
+
+	.fadeIn {
+		@include mixins.fadeInAnimation;
+	}
+
+	.fadeOut {
+		@include mixins.fadeOutAnimation;
+	}
+}

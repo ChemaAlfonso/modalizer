@@ -1,0 +1,229 @@
+:root {
+	--primary: #fdfaf8;
+	--secondary: #002866;
+	--tertiary: #6749e3;
+	--quaternary: #00bbee;
+}
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	background-color: var(--primary);
+	color: var(--secondary);
+}
+
+button {
+	padding: .6rem .8rem;
+	text-align: center;
+	background-color: var(--tertiary);
+	color: var(--primary);
+	border-radius: 4px;
+	border-color: transparent;
+	display: block;
+	margin: 0 auto;
+	cursor: pointer;
+	transition-duration: .25s;
+	border: 1px solid var(--tertiary);
+}
+
+button:hover {
+	background-color: var(--primary);
+	color: var(--tertiary);
+	border-color: var(--tertiary);
+}
+
+b {
+	color: var(--tertiary);
+}
+
+a {
+	color: var(--tertiary)
+}
+
+a:hover {
+	color: var(--secondary)
+}
+
+.menu ul {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 1.5rem;
+	list-style: none;
+	padding: 0 1rem;
+}
+
+.menu ul li {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.menu ul a {
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 1.1rem;
+	transition-duration: .25s;
+}
+
+.menu ul a:hover {
+	color: var(--secondary);
+}
+
+.presentation,
+#examples,
+#usage {
+	width: 80vw;
+	max-width: 1980px;
+	margin: 20px auto;
+}
+
+.block {
+	margin-bottom: 4rem;
+}
+
+.presentation .title {
+	text-align: center;
+	margin-bottom: 3rem;
+	font-size: 3rem;
+	color: var(--tertiary);
+}
+
+.presentation .features {
+	margin-top: 2rem;
+	margin-bottom: 3rem;
+}
+
+.presentation li {
+	margin-bottom: .8rem;
+}
+
+.github {
+	position: absolute;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	top: 0px;
+    left: 0px;
+	padding: 2rem;
+	padding-left: .8rem;
+	padding-top: .8rem;
+}
+
+.github img {
+	width: 2rem;
+	height: 2rem;
+}
+
+.github:hover img {
+	transition-duration: .25s;
+	transform: scale(1.04);
+}
+
+.corner {
+	position: absolute;
+	top: -75px;
+    left: -75px;
+	width: 150px;
+	height: 150px;
+	transform: rotate(45deg);
+	background-color: var(--tertiary);
+	z-index: -1;
+}
+
+.animation-selects {
+	display: flex;
+	gap: 2rem;
+}
+
+.animation-selects select {
+	min-height: 33px;
+	margin-left: .4rem;
+}
+
+.modalizer {
+	border-radius: 8px;
+}
+
+.my-content {
+	padding: 2rem;
+}
+
+.my-content p {
+	margin-bottom: 2rem;
+}
+
+.my-trigger {
+	margin-top: 2rem;
+}
+
+.my-closer {
+	margin-right: 0;
+}
+
+.my-modal-3 {
+	border-radius: 4px 40px 4px 40px;
+	background: transparent;
+}
+
+.my-content--3 {
+	background-color: #ffffffe8;
+}
+
+.my-modal-3::backdrop {
+	background: linear-gradient(to right bottom, #6849e3b9, #0090ffb9, #00bcffb9, #00daa9b9, #17ee00b9);
+}
+
+.my-content--4 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.my-content--4 figure {
+	max-width: 40vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.my-content--4 figure img {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.my-content--4 .buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+}
+
+
+.copy ul {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+	list-style: none;
+	padding: 0 1rem;
+}
+
+.copy ul a {
+	text-decoration: none;
+	font-weight: 400;
+	font-size: 1.1rem;
+	transition-duration: .25s;
+}
+
+.copy ul a:hover {
+	color: var(--secondary);
+}
