@@ -66,7 +66,7 @@ class Modalizer {
         if (config?.closer)
             this.enableEvent(config.closer, 'click', this.hide.bind(this));
         if (this.modalized.trigger)
-            this.enableEvent(document, 'click', this.handleClickEvents.bind(this));
+            this.enableEvent(this.modalized.trigger, 'click', this.handleClickEvents.bind(this));
         if (config?.customClassName)
             target.classList.add(config.customClassName);
         this.enabledEvents.forEach(activeEvent => {
@@ -81,7 +81,7 @@ class Modalizer {
     }
     handleClickEvents(e) {
         const target = e.target;
-        if (!target || target !== this.modalized.trigger)
+        if (!target)
             return;
         this.show();
     }
