@@ -49,7 +49,7 @@ const modalizable: Modalizable = {
 }
 
 // Create a Modalizer instance with an array of Modalizable objects
-const modalizer = new Modalizer([modalizable])
+const modalizer = new Modalizer(modalizable)
 ```
 
 ### JavaScript minimal example
@@ -68,7 +68,7 @@ const modalizable = {
 }
 
 // Create a Modalizer instance with an array of Modalizable objects
-const modalizer = new Modalizer([modalizable])
+const modalizer = new Modalizer(modalizable)
 ```
 ### Using custom config
 
