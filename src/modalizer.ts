@@ -108,7 +108,7 @@ export class Modalizer {
 
 		if (config?.closer) this.enableEvent(config.closer, 'click', this.hide.bind(this))
 
-		if (this.modalized.trigger) this.enableEvent(document, 'click', this.handleClickEvents.bind(this))
+		if (this.modalized.trigger) this.enableEvent(this.modalized.trigger, 'click', this.handleClickEvents.bind(this))
 
 		if (config?.customClassName) target.classList.add(config.customClassName)
 
@@ -128,7 +128,7 @@ export class Modalizer {
 	private handleClickEvents(e: MouseEvent) {
 		const target = e.target as HTMLElement
 
-		if (!target || target !== this.modalized.trigger) return
+		if (!target) return
 
 		this.show()
 	}
