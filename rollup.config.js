@@ -7,7 +7,12 @@ export default {
 		{
 			file: 'dist/modalizer.js',
 			format: 'es'
+		},
+		{
+			file: 'dist/modalizer.min.js',
+			format: 'es',
+			plugins: [terser()]
 		}
 	],
-	plugins: [typescript(), terser()]
+	plugins: [typescript()]
 }
