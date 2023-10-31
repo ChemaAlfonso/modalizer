@@ -10,6 +10,8 @@
 
 Modalizer is a TypeScript library for creating and managing modals in web applications. It provides an easy way to create modal dialogs with customizable animations and styles.
 
+[View working example](https://chemaalfonso.github.io/modalizer/)
+
 ## Features
 
 - Native: Keep the native way using native dialog html element.
@@ -34,25 +36,27 @@ npm i modalizer
 
 ## Usage
 
-### Typescript minimal example
+### Typescript minimal example with HTML trigger
 ```typescript
 import { Modalizer, Modalizable } from 'modalizer'
 
 // Define your modal content and trigger elements
 const modalContent = document.querySelector('your-modal-content')
 const modalTrigger = document.querySelector('your-modal-trigger')
+const modalCloser = document.querySelector('your-modal-closer')
 
 // Create Modalizable objects
 const modalizable: Modalizable = {
 	element: modalContent,
-	trigger: modalTrigger
+	trigger: modalTrigger,
+	config: { closer: modalCloser }
 }
 
 // Create a Modalizer instance with an array of Modalizable objects
 const modalizer = new Modalizer(modalizable)
 ```
 
-### JavaScript minimal example
+### JavaScript minimal example with HTML trigger
 
 ```javascript
 import { Modalizer } from 'modalizer'
@@ -60,16 +64,39 @@ import { Modalizer } from 'modalizer'
 // Define your modal content and trigger elements
 const modalContent = document.querySelector('your-modal-content')
 const modalTrigger = document.querySelector('your-modal-trigger')
+const modalCloser = document.querySelector('your-modal-closer')
 
 // Create Modalizable objects
 const modalizable = {
 	element: modalContent,
-	trigger: modalTrigger
+	trigger: modalTrigger,
+	config: { closer: modalCloser }
 }
 
 // Create a Modalizer instance with an array of Modalizable objects
 const modalizer = new Modalizer(modalizable)
 ```
+
+### Programatic modal invocation
+```typescript
+import { Modalizer, Modalizable } from 'modalizer'
+
+// Define your modal content and trigger elements
+const modalContent = document.querySelector('your-modal-content')
+
+// Create Modalizable objects
+const modalizable: Modalizable = { element: modalContent }
+
+// Create a Modalizer instance with an array of Modalizable objects
+const modalizer = new Modalizer(modalizable)
+
+// Show modal
+modalizer.show()
+
+// Hide modal
+modalizer.hide()
+```
+
 ### Using custom config
 
 ```typescript
@@ -80,6 +107,7 @@ const config: ModalizerConfig = {
 	animationIn: 'animationInName',
 	animationOut: 'animationOutName',
 	closeOnEscKeyPress: boolean,
+	closer: HTMLElement
 	customClassName: 'CustomizableCssClassName'
 }
 ```
