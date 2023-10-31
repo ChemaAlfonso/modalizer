@@ -6,32 +6,34 @@ type ModalizerTrigger = HTMLElement;
 type ModalizerContent = HTMLElement;
 type ModalizerCloser = HTMLElement;
 export interface ModalizerConfig {
-    animationIn?: MODALIZER_ANIMATION;
-    animationOut?: MODALIZER_ANIMATION;
+    animationIn: MODALIZER_ANIMATION;
+    animationOut: MODALIZER_ANIMATION;
     closer?: ModalizerCloser;
-    closeOnEscKeyPress?: boolean;
+    closeOnEscKeyPress: boolean;
     customClassName?: string;
 }
 export interface Modalizable {
     element: ModalizerContent;
-    trigger: ModalizerTrigger;
-    config?: ModalizerConfig;
+    trigger?: ModalizerTrigger;
+    config?: Partial<ModalizerConfig>;
 }
 export declare class Modalizer {
-    private modalizations;
-    private openedModalizations;
-    constructor(modalizables: Modalizable[]);
-    closeLast(): void;
-    add(modalizables: Modalizable[]): void;
-    reset(keepContent?: boolean): void;
+    private modalized;
+    private enabledEvents;
+    constructor(modalizable: Modalizable);
+    show(): void;
+    hide(): void;
+    destroy(): void;
     private modalize;
     private insertElementIntoModalizedTarget;
-    private initializeModalized;
-    private listen;
-    private showModalized;
-    private openModalized;
-    private hideModalized;
-    private closeModalized;
+    private initialize;
+    private enableEvent;
+    private handleClickEvents;
+    private handleKeydownEvents;
+    private handleAnimationEvents;
+    private handleCancelEvents;
+    private setAsOpened;
+    private setAsClosed;
     private defaultConfig;
 }
 export {};

@@ -16,76 +16,75 @@ type ModalizerContent = HTMLElement
 type ModalizerCloser = HTMLElement
 
 export interface ModalizerConfig {
-	animationIn?: MODALIZER_ANIMATION
-	animationOut?: MODALIZER_ANIMATION
+	animationIn: MODALIZER_ANIMATION
+	animationOut: MODALIZER_ANIMATION
 	closer?: ModalizerCloser
-	closeOnEscKeyPress?: boolean
+	closeOnEscKeyPress: boolean
 	customClassName?: string
 }
 
 export interface Modalizable {
 	element: ModalizerContent
-	trigger: ModalizerTrigger
-	config?: ModalizerConfig
+	trigger?: ModalizerTrigger
+	config?: Partial<ModalizerConfig>
 }
 
 interface Modalized {
 	target: ModalizerTarget
-	trigger: ModalizerTrigger
+	trigger?: ModalizerTrigger
 	config: ModalizerConfig
 	state: MODALIZER_STATE
 }
 
-type Modalizations = Map<ModalizerTrigger, Modalized>
-
 export class Modalizer {
-	private modalizations: Modalizations
-	private openedModalizations: Modalized[] = []
+	private modalized: Modalized
+	private enabledEvents: { listener: HTMLElement | Document; eventType: string; action: (e: any) => void }[] = []
 
-	constructor(modalizables: Modalizable[]) {
-		this.modalizations = new Map()
-		this.modalize(modalizables)
-		this.listen()
+	constructor(modalizable: Modalizable) {
+		this.modalized = this.modalize(modalizable)
+		this.initialize()
 	}
 
-	closeLast(): void {
-		if (!this.openedModalizations.length) return
+	show() {
+		if (this.modalized.state !== MODALIZER_STATE.CLOSED) return
 
-		this.hideModalized(this.openedModalizations[this.openedModalizations.length - 1])
+		this.modalized.target.classList.add(this.modalized.config.animationIn)
+
+		this.modalized.target.showModal()
+		this.modalized.target.setAttribute('opening', '')
+		this.modalized.state = MODALIZER_STATE.OPENING
 	}
 
-	add(modalizables: Modalizable[]) {
-		this.modalize(modalizables)
+	hide() {
+		if (this.modalized.state !== MODALIZER_STATE.OPENED) return
+
+		this.modalized.target.classList.add(this.modalized.config.animationOut)
+
+		this.modalized.target.setAttribute('closing', '')
+		this.modalized.state = MODALIZER_STATE.CLOSING
 	}
 
-	reset(keepContent = true) {
-		this.modalizations.forEach(modalization => {
-			modalization.target.close()
-
-			if (keepContent)
-				modalization.target.parentElement?.insertBefore(modalization.target.firstChild!, modalization.target)
-
-			modalization.target.parentElement?.removeChild(modalization.target)
+	destroy() {
+		this.modalized.target.close()
+		this.enabledEvents.forEach(activeEvent => {
+			const { listener, eventType, action } = activeEvent
+			listener.removeEventListener(eventType, action)
 		})
-
-		this.modalizations.clear()
-		this.openedModalizations = []
+		this.modalized.target.parentElement?.removeChild(this.modalized.target)
 	}
 
-	// Generate
-	private modalize(modalizables: Modalizable[] = []) {
-		modalizables.forEach(({ element, trigger, config }) => {
-			const modalized: Modalized = {
-				target: this.insertElementIntoModalizedTarget(element),
-				trigger,
-				config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
-				state: MODALIZER_STATE.CLOSED
-			}
+	// Initializers
+	private modalize(modalizable: Modalizable): Modalized {
+		const { element, trigger, config } = modalizable
 
-			this.initializeModalized(modalized)
+		const modalized: Modalized = {
+			target: this.insertElementIntoModalizedTarget(element),
+			trigger,
+			config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
+			state: MODALIZER_STATE.CLOSED
+		}
 
-			this.modalizations.set(trigger, modalized)
-		})
+		return modalized
 	}
 
 	private insertElementIntoModalizedTarget(element: HTMLElement): ModalizerTarget {
@@ -100,102 +99,86 @@ export class Modalizer {
 		return modalizedElement
 	}
 
-	// Initialize
-	private initializeModalized(modalized: Modalized): void {
-		const { target, config } = modalized
+	private initialize(): void {
+		const { target, config } = this.modalized
 
-		if (config?.closer) config.closer.addEventListener('click', () => this.hideModalized(modalized))
+		this.enableEvent(target, 'animationend', this.handleAnimationEvents.bind(this))
+		this.enableEvent(target, 'cancel', this.handleCancelEvents.bind(this))
+		this.enableEvent(document, 'keydown', this.handleKeydownEvents.bind(this))
+
+		if (config?.closer) this.enableEvent(config.closer, 'click', this.hide.bind(this))
+
+		if (this.modalized.trigger) this.enableEvent(document, 'click', this.handleClickEvents.bind(this))
 
 		if (config?.customClassName) target.classList.add(config.customClassName)
 
-		target.addEventListener('animationend', e => {
-			const { animationName, pseudoElement } = e
-
-			if (pseudoElement) return
-
-			if (animationName === config.animationIn && modalized.state === MODALIZER_STATE.OPENING) {
-				this.openModalized(modalized)
-				return
-			}
-
-			if (animationName === config.animationOut && modalized.state === MODALIZER_STATE.CLOSING) {
-				this.closeModalized(modalized)
-				return
-			}
+		this.enabledEvents.forEach(activeEvent => {
+			const { listener, eventType, action } = activeEvent
+			listener.addEventListener(eventType, action)
 		})
 
-		target.addEventListener('cancel', e => {
-			e.preventDefault()
-		})
-
-		modalized.target.classList.add('modalizer--initialized')
+		this.modalized.target.classList.add('modalizer--initialized')
 	}
 
-	private listen() {
-		document.addEventListener('click', e => {
-			const target = e.target as HTMLElement
-
-			if (!target) return
-
-			const modalized = this.modalizations.get(target)
-
-			if (!modalized) return
-
-			this.showModalized(modalized)
-		})
-
-		document.addEventListener('keydown', e => {
-			if (e.code !== 'Escape' || !this.openedModalizations.length) return
-
-			const lastModalizedOpened = this.openedModalizations[this.openedModalizations.length - 1]
-
-			if (!lastModalizedOpened.config.closeOnEscKeyPress) return
-
-			this.hideModalized(lastModalizedOpened)
-		})
+	// Event handlers
+	private enableEvent(listener: HTMLElement | Document, eventType: string, action: (e: any) => void) {
+		this.enabledEvents.push({ listener, eventType, action })
 	}
 
-	// Behaviours
-	private showModalized(modalized: Modalized) {
-		if (modalized.state !== MODALIZER_STATE.CLOSED) return
+	private handleClickEvents(e: MouseEvent) {
+		const target = e.target as HTMLElement
 
-		if (modalized.config?.animationIn) modalized.target.classList.add(modalized.config.animationIn)
+		if (!target || target !== this.modalized.trigger) return
 
-		modalized.target.showModal()
-		modalized.target.setAttribute('opening', '')
-		modalized.state = MODALIZER_STATE.OPENING
-
-		this.openedModalizations.push(modalized)
+		this.show()
 	}
 
-	private openModalized(modalized: Modalized) {
-		if (modalized.state !== MODALIZER_STATE.OPENING) return
+	private handleKeydownEvents(e: KeyboardEvent) {
+		if (e.code !== 'Escape') return
 
-		modalized.target.removeAttribute('opening')
-		modalized.state = MODALIZER_STATE.OPENED
+		if (!this.modalized.config.closeOnEscKeyPress) return
 
-		if (modalized.config?.animationIn) modalized.target.classList.remove(modalized.config.animationIn)
+		this.hide()
 	}
 
-	private hideModalized(modalized: Modalized) {
-		if (modalized.state !== MODALIZER_STATE.OPENED) return
+	private handleAnimationEvents(e: AnimationEvent) {
+		const { pseudoElement } = e
 
-		modalized.target.setAttribute('closing', '')
-		modalized.state = MODALIZER_STATE.CLOSING
+		if (pseudoElement) return
 
-		if (modalized.config?.animationOut) modalized.target.classList.add(modalized.config.animationOut)
+		if (this.modalized.state === MODALIZER_STATE.OPENING) {
+			this.setAsOpened()
+			return
+		}
+
+		if (this.modalized.state === MODALIZER_STATE.CLOSING) {
+			this.setAsClosed()
+			return
+		}
 	}
 
-	private closeModalized(modalized: Modalized) {
-		if (modalized.state !== MODALIZER_STATE.CLOSING) return
+	private handleCancelEvents(e: Event) {
+		e.preventDefault()
+	}
 
-		modalized.target.close()
-		modalized.target.removeAttribute('closing')
-		modalized.state = MODALIZER_STATE.CLOSED
+	// Final state setters
+	private setAsOpened() {
+		if (this.modalized.state !== MODALIZER_STATE.OPENING) return
 
-		if (modalized.config?.animationOut) modalized.target.classList.remove(modalized.config.animationOut)
+		this.modalized.target.removeAttribute('opening')
+		this.modalized.state = MODALIZER_STATE.OPENED
 
-		this.openedModalizations.pop()
+		this.modalized.target.classList.remove(this.modalized.config.animationIn)
+	}
+
+	private setAsClosed() {
+		if (this.modalized.state !== MODALIZER_STATE.CLOSING) return
+
+		this.modalized.target.close()
+		this.modalized.target.removeAttribute('closing')
+		this.modalized.state = MODALIZER_STATE.CLOSED
+
+		this.modalized.target.classList.remove(this.modalized.config.animationOut)
 	}
 
 	// Default

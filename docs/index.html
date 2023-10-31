@@ -71,7 +71,7 @@
 			</div>
 
 			<script type="module">
-				import { Modalizer } from './dist/modalizer.js'
+				import { Modalizer } from './dist/modalizer.min.js'
 
 				document.addEventListener('DOMContentLoaded', () => {
 					const target = document.querySelector('.my-content--1')
@@ -88,7 +88,7 @@
 						}
 					}
 
-					new Modalizer([modalizable])
+					new Modalizer(modalizable)
 				})
 			</script>
 		</div>
@@ -206,23 +206,26 @@
 			</div>
 
 			<!-- Modal example 2 -->
-			<div class="my-content my-content--2">
-				<h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
-					eius
-					adipisci iste nisi beatae.</p>
-				<button class="my-closer my-closer--2">Close</button>
-			</div>
+				<div class="modal2Content"></div>
+			
 
 			<script type="module">
-				import { Modalizer } from './dist/modalizer.js'
+				import { Modalizer } from './dist/modalizer.min.js'
 
+				const modal2Content = document.querySelector('.modal2Content')
 				const animationInSelect = document.querySelector('#animationIn')
 				const animationOutSelect = document.querySelector('#animationOut')
-				const modalizer2 = new Modalizer();
-
+				let modalizer2
 				const createModalizer = () => {
-					modalizer2.reset()
+					modal2Content.innerHTML = `
+						<div class="my-content my-content--2">
+							<h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure nobis doloremque, hic sunt neque
+								eius
+								adipisci iste nisi beatae.</p>
+							<button class="my-closer my-closer--2">Close</button>
+						</div>
+					`
 
 					const target = document.querySelector('.my-content--2')
 					const trigger = document.querySelector('.my-trigger--2')
@@ -238,7 +241,9 @@
 						}
 					}
 
-					modalizer2.add([modalizable])
+					modalizer2?.destroy()
+
+					modalizer2 = new Modalizer(modalizable)
 				}
 
 
@@ -269,7 +274,7 @@
 			</div>
 
 			<script type="module">
-				import { Modalizer } from './dist/modalizer.js'
+				import { Modalizer } from './dist/modalizer.min.js'
 
 				document.addEventListener('DOMContentLoaded', () => {
 					const target = document.querySelector('.my-content--3')
@@ -287,7 +292,7 @@
 						}
 					}
 
-					new Modalizer([modalizable3])
+					new Modalizer(modalizable3)
 				})
 			</script>
 
@@ -327,7 +332,7 @@
 			</div>
 
 			<script type="module">
-				import { Modalizer } from './dist/modalizer.js'
+				import { Modalizer } from './dist/modalizer.min.js'
 
 				document.addEventListener('DOMContentLoaded', () => {
 					const target = document.querySelector('.my-content--4')
@@ -345,10 +350,10 @@
 						}
 					}
 
-					const modalizer = new Modalizer([modalizable])
+					const modalizer = new Modalizer(modalizable)
 
 					exampleButton.addEventListener('click', () => {
-						modalizer.closeLast()
+						modalizer.hide()
 						setTimeout(() => {
 							alert('Your action fired!')
 						}, 100);

@@ -11,42 +11,44 @@ var MODALIZER_STATE;
     MODALIZER_STATE["CLOSED"] = "closed";
 })(MODALIZER_STATE || (MODALIZER_STATE = {}));
 class Modalizer {
-    constructor(modalizables) {
-        this.openedModalizations = [];
-        this.modalizations = new Map();
-        this.modalize(modalizables);
-        this.listen();
+    constructor(modalizable) {
+        this.enabledEvents = [];
+        this.modalized = this.modalize(modalizable);
+        this.initialize();
     }
-    closeLast() {
-        if (!this.openedModalizations.length)
+    show() {
+        if (this.modalized.state !== MODALIZER_STATE.CLOSED)
             return;
-        this.hideModalized(this.openedModalizations[this.openedModalizations.length - 1]);
+        this.modalized.target.classList.add(this.modalized.config.animationIn);
+        this.modalized.target.showModal();
+        this.modalized.target.setAttribute('opening', '');
+        this.modalized.state = MODALIZER_STATE.OPENING;
     }
-    add(modalizables) {
-        this.modalize(modalizables);
+    hide() {
+        if (this.modalized.state !== MODALIZER_STATE.OPENED)
+            return;
+        this.modalized.target.classList.add(this.modalized.config.animationOut);
+        this.modalized.target.setAttribute('closing', '');
+        this.modalized.state = MODALIZER_STATE.CLOSING;
     }
-    reset(keepContent = true) {
-        this.modalizations.forEach(modalization => {
-            modalization.target.close();
-            if (keepContent)
-                modalization.target.parentElement?.insertBefore(modalization.target.firstChild, modalization.target);
-            modalization.target.parentElement?.removeChild(modalization.target);
+    destroy() {
+        this.modalized.target.close();
+        this.enabledEvents.forEach(activeEvent => {
+            const { listener, eventType, action } = activeEvent;
+            listener.removeEventListener(eventType, action);
         });
-        this.modalizations.clear();
-        this.openedModalizations = [];
+        this.modalized.target.parentElement?.removeChild(this.modalized.target);
     }
-    // Generate
-    modalize(modalizables = []) {
-        modalizables.forEach(({ element, trigger, config }) => {
-            const modalized = {
-                target: this.insertElementIntoModalizedTarget(element),
-                trigger,
-                config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
-                state: MODALIZER_STATE.CLOSED
-            };
-            this.initializeModalized(modalized);
-            this.modalizations.set(trigger, modalized);
-        });
+    // Initializers
+    modalize(modalizable) {
+        const { element, trigger, config } = modalizable;
+        const modalized = {
+            target: this.insertElementIntoModalizedTarget(element),
+            trigger,
+            config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
+            state: MODALIZER_STATE.CLOSED
+        };
+        return modalized;
     }
     insertElementIntoModalizedTarget(element) {
         const modalizerRoot = element?.parentElement || document.body;
@@ -56,86 +58,71 @@ class Modalizer {
         modalizedElement.appendChild(element);
         return modalizedElement;
     }
-    // Initialize
-    initializeModalized(modalized) {
-        const { target, config } = modalized;
+    initialize() {
+        const { target, config } = this.modalized;
+        this.enableEvent(target, 'animationend', this.handleAnimationEvents.bind(this));
+        this.enableEvent(target, 'cancel', this.handleCancelEvents.bind(this));
+        this.enableEvent(document, 'keydown', this.handleKeydownEvents.bind(this));
         if (config?.closer)
-            config.closer.addEventListener('click', () => this.hideModalized(modalized));
+            this.enableEvent(config.closer, 'click', this.hide.bind(this));
+        if (this.modalized.trigger)
+            this.enableEvent(document, 'click', this.handleClickEvents.bind(this));
         if (config?.customClassName)
             target.classList.add(config.customClassName);
-        target.addEventListener('animationend', e => {
-            const { animationName, pseudoElement } = e;
-            if (pseudoElement)
-                return;
-            if (animationName === config.animationIn && modalized.state === MODALIZER_STATE.OPENING) {
-                this.openModalized(modalized);
-                return;
-            }
-            if (animationName === config.animationOut && modalized.state === MODALIZER_STATE.CLOSING) {
-                this.closeModalized(modalized);
-                return;
-            }
+        this.enabledEvents.forEach(activeEvent => {
+            const { listener, eventType, action } = activeEvent;
+            listener.addEventListener(eventType, action);
         });
-        target.addEventListener('cancel', e => {
-            e.preventDefault();
-        });
-        modalized.target.classList.add('modalizer--initialized');
+        this.modalized.target.classList.add('modalizer--initialized');
     }
-    listen() {
-        document.addEventListener('click', e => {
-            const target = e.target;
-            if (!target)
-                return;
-            const modalized = this.modalizations.get(target);
-            if (!modalized)
-                return;
-            this.showModalized(modalized);
-        });
-        document.addEventListener('keydown', e => {
-            if (e.code !== 'Escape' || !this.openedModalizations.length)
-                return;
-            const lastModalizedOpened = this.openedModalizations[this.openedModalizations.length - 1];
-            if (!lastModalizedOpened.config.closeOnEscKeyPress)
-                return;
-            this.hideModalized(lastModalizedOpened);
-        });
+    // Event handlers
+    enableEvent(listener, eventType, action) {
+        this.enabledEvents.push({ listener, eventType, action });
     }
-    // Behaviours
-    showModalized(modalized) {
-        if (modalized.state !== MODALIZER_STATE.CLOSED)
+    handleClickEvents(e) {
+        const target = e.target;
+        if (!target || target !== this.modalized.trigger)
             return;
-        if (modalized.config?.animationIn)
-            modalized.target.classList.add(modalized.config.animationIn);
-        modalized.target.showModal();
-        modalized.target.setAttribute('opening', '');
-        modalized.state = MODALIZER_STATE.OPENING;
-        this.openedModalizations.push(modalized);
+        this.show();
     }
-    openModalized(modalized) {
-        if (modalized.state !== MODALIZER_STATE.OPENING)
+    handleKeydownEvents(e) {
+        if (e.code !== 'Escape')
             return;
-        modalized.target.removeAttribute('opening');
-        modalized.state = MODALIZER_STATE.OPENED;
-        if (modalized.config?.animationIn)
-            modalized.target.classList.remove(modalized.config.animationIn);
+        if (!this.modalized.config.closeOnEscKeyPress)
+            return;
+        this.hide();
     }
-    hideModalized(modalized) {
-        if (modalized.state !== MODALIZER_STATE.OPENED)
+    handleAnimationEvents(e) {
+        const { pseudoElement } = e;
+        if (pseudoElement)
             return;
-        modalized.target.setAttribute('closing', '');
-        modalized.state = MODALIZER_STATE.CLOSING;
-        if (modalized.config?.animationOut)
-            modalized.target.classList.add(modalized.config.animationOut);
+        if (this.modalized.state === MODALIZER_STATE.OPENING) {
+            this.setAsOpened();
+            return;
+        }
+        if (this.modalized.state === MODALIZER_STATE.CLOSING) {
+            this.setAsClosed();
+            return;
+        }
     }
-    closeModalized(modalized) {
-        if (modalized.state !== MODALIZER_STATE.CLOSING)
+    handleCancelEvents(e) {
+        e.preventDefault();
+    }
+    // Final state setters
+    setAsOpened() {
+        if (this.modalized.state !== MODALIZER_STATE.OPENING)
             return;
-        modalized.target.close();
-        modalized.target.removeAttribute('closing');
-        modalized.state = MODALIZER_STATE.CLOSED;
-        if (modalized.config?.animationOut)
-            modalized.target.classList.remove(modalized.config.animationOut);
-        this.openedModalizations.pop();
+        this.modalized.target.removeAttribute('opening');
+        this.modalized.state = MODALIZER_STATE.OPENED;
+        this.modalized.target.classList.remove(this.modalized.config.animationIn);
+    }
+    setAsClosed() {
+        if (this.modalized.state !== MODALIZER_STATE.CLOSING)
+            return;
+        this.modalized.target.close();
+        this.modalized.target.removeAttribute('closing');
+        this.modalized.state = MODALIZER_STATE.CLOSED;
+        this.modalized.target.classList.remove(this.modalized.config.animationOut);
     }
     // Default
     defaultConfig() {
