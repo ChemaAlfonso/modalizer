@@ -6,7 +6,7 @@
   "scripts": {
     "dev-styles": "sass -w assets/scss/index.scss dist/assets/styles/styles.css",
     "dev": "tsc -w",
-    "build-styles": "sass --no-source-map --style=compressed assets/scss/index.scss dist/assets/styles/styles.css && sass --no-source-map --style=compressed assets/scss/animations/animate.scss dist/assets/styles/animate.css",
+    "build-styles": "sass --no-source-map --style=compressed assets/scss/index.scss dist/css/styles.css && sass --no-source-map --style=compressed assets/scss/animations/animate.scss dist/css/animate.css",
     "build-script": "rollup --compact -c rollup.config.js",
     "remove-builds": "(rm -r dist || true) && (rm -r docs/dist || true)",
     "build": "npm run remove-builds && npm run build-styles && npm run build-script && cp -R dist docs/dist"
