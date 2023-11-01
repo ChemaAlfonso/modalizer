@@ -8,7 +8,8 @@
     "dev": "tsc -w",
     "build-styles": "sass --no-source-map --style=compressed assets/scss/index.scss dist/assets/styles/styles.css && sass --no-source-map --style=compressed assets/scss/animations/animate.scss dist/assets/styles/animate.css",
     "build-script": "rollup --compact -c rollup.config.js",
-    "build": "rm -r dist && npm run build-styles && npm run build-script"
+    "remove-builds": "(rm -r dist || true) && (rm -r docs/dist || true)",
+    "build": "npm run remove-builds && npm run build-styles && npm run build-script && cp -R dist docs/dist"
   },
   "author": "Chema Alfonso <hola@chemaalfonso.com>",
   "license": "MIT",
