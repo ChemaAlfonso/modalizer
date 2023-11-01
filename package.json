@@ -12,7 +12,7 @@
   "types": "./dist/modalizer.d.js",
   "scripts": {
 	"prepare": "husky install",
-    "dev:styles": "sass -w assets/scss/index.scss dist/assets/styles/styles.css",
+    "dev:styles": "sass -w assets/scss/index.scss dist/css/styles.css",
     "dev": "tsc -w",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
