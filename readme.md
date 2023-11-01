@@ -17,6 +17,7 @@ Modalizer is a TypeScript library for creating and managing modals in web applic
 - Native: Keep the native way using native dialog html element.
 - Ease of Use: Implement modals in minutes with a simple and user-friendly API.
 - Keep your rules: Modalizer only modalizes your content but you still have all its control.
+- Dependency free: Modalizer use 0 dependencies.
 - Quick Customization: Adapt the appearance of your modals to fit your project.
 - Custom HTML Content: Effortlessly load any HTML content into your modals.
 - Compatible animations: Compatible with [Animate.css](https://animate.style/) animations
