@@ -3,6 +3,7 @@
 <h1 align="center">
   Modalizer
 </h1>
+
 <p align="center">
 <a href="https://www.npmjs.com/package/@chemaalfonso/modalizer"><img src="https://img.shields.io/npm/v/@chemaalfonso/modalizer" alt="NPM version"/></a>
  <a target="_blank" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-TypeScript-FFFFFF?logo=typescript" alt="Typescript"></a>
