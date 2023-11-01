@@ -122,10 +122,12 @@ export class Modalizer {
 		this.show()
 	}
 
-	private handleKeydownEvents(e: KeyboardEvent) {
-		if (e.code !== 'Escape') return
+	private handleCancelEvents(e: Event) {
+		e.preventDefault()
+	}
 
-		if (!this.config.closeOnEscKeyPress) return
+	private handleKeydownEvents(e: KeyboardEvent) {
+		if (e.code !== 'Escape' || !this.config.closeOnEscKeyPress) return
 
 		this.hide()
 	}
@@ -144,10 +146,6 @@ export class Modalizer {
 			default:
 				break
 		}
-	}
-
-	private handleCancelEvents(e: Event) {
-		e.preventDefault()
 	}
 
 	// Final state setters
