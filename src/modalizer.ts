@@ -1,6 +1,6 @@
 enum MODALIZER_ANIMATION {
-	FADE_IN = 'fadeIn',
-	FADE_OUT = 'fadeOut'
+	FADE_IN = 'modalizer-fadeIn',
+	FADE_OUT = 'modalizer-fadeOut'
 }
 
 enum MODALIZER_STATE {

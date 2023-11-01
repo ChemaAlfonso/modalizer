@@ -1,7 +1,7 @@
 @mixin fadeInAnimation {
-	animation: fadeIn 0.25s forwards;
+	animation: modalizerFadeIn 0.25s forwards;
 }
 
 @mixin fadeOutAnimation {
-	animation: fadeOut 0.25s forwards;
+	animation: modalizerFadeOut 0.25s forwards;
 }

@@ -40,10 +40,10 @@
 	}
 }
 
-.fadeIn {
+.modalizer-fadeIn {
 	@include mixins.fadeInAnimation;
 }
 
-.fadeOut {
+.modalizer-fadeOut {
 	@include mixins.fadeOutAnimation;
 }
