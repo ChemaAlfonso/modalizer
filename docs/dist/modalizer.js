@@ -74,7 +74,7 @@ class Modalizer {
     }
     closeOnCancel(e) {
         e.preventDefault();
-        if (!this.config.closeOnCancelPress)
+        if (!this.config.closeOnEscKeyPress)
             return;
         this.hide();
     }
@@ -107,7 +107,7 @@ class Modalizer {
         return {
             animationIn: MODALIZER_ANIMATION.FADE_IN,
             animationOut: MODALIZER_ANIMATION.FADE_OUT,
-            closeOnCancelPress: true
+            closeOnEscKeyPress: true
         };
     }
 }export{Modalizer};

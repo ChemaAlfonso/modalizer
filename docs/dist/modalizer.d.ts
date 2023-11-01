@@ -8,8 +8,8 @@ type ModalizerCloser = HTMLElement;
 export interface ModalizerConfig {
     animationIn: MODALIZER_ANIMATION | string;
     animationOut: MODALIZER_ANIMATION | string;
+    closeOnEscKeyPress: boolean;
     closer?: ModalizerCloser;
-    closeOnCancelPress: boolean;
     customClassName?: string;
 }
 export interface Modalizable {
