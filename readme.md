@@ -46,59 +46,66 @@ npm i @chemaalfonso/modalizer
 
 ## 📝 Usage
 
-Include basic style rules
-```html
+1. Include basic style rules:
 
-<link rel="stylesheet" href="path/to/modalizer.css">
-```
+	### Using link on HTML
+	```html
+	<link rel="stylesheet" href="path/to/modalizer.css">
+	```
 
-### Typescript minimal example with HTML trigger
-```typescript
-import { Modalizer, Modalizable } from 'modalizer'
+	### Using import
+	```css
+	import "@chemaalfonso/modalizer/dist/css/styles.css";
+	```
+2. Import & use:
 
-// Define your modal content and trigger elements
-const element = document.querySelector('your-modal-content')
-const trigger = document.querySelector('your-modal-trigger')
+	### Typescript minimal example with HTML trigger
+	```typescript
+	import { Modalizer, Modalizable } from 'modalizer'
 
-// Create Modalizable objects
-const modalizable: Modalizable = { element, trigger }
+	// Define your modal content and trigger elements
+	const element = document.querySelector('your-modal-content')
+	const trigger = document.querySelector('your-modal-trigger')
 
-// Create a Modalizer instance
-const modalizer = new Modalizer(modalizable)
-```
+	// Create Modalizable objects
+	const modalizable: Modalizable = { element, trigger }
 
-### JavaScript minimal example with HTML trigger
+	// Create a Modalizer instance
+	const modalizer = new Modalizer(modalizable)
+	```
 
-```javascript
-import { Modalizer } from 'modalizer'
+	### JavaScript minimal example with HTML trigger
 
-// Define your modal content and trigger elements
-const element = document.querySelector('your-modal-content')
-const trigger = document.querySelector('your-modal-trigger')
+	```javascript
+	import { Modalizer } from 'modalizer'
 
-// Create Modalizable objects
-const modalizable = { element, trigger }
+	// Define your modal content and trigger elements
+	const element = document.querySelector('your-modal-content')
+	const trigger = document.querySelector('your-modal-trigger')
 
-// Create a Modalizer instance
-const modalizer = new Modalizer(modalizable)
-```
+	// Create Modalizable objects
+	const modalizable = { element, trigger }
 
-### Programatic modal invocation
-```typescript
-import { Modalizer, Modalizable } from 'modalizer'
+	// Create a Modalizer instance
+	const modalizer = new Modalizer(modalizable)
+	```
 
-// Define your modal content
-const element = document.querySelector('your-modal-content')
+	### Programatic modal invocation
+	```typescript
+	import { Modalizer, Modalizable } from 'modalizer'
 
-// Create a Modalizer instance
-const modalizer = new Modalizer({ element })
+	// Define your modal content
+	const element = document.querySelector('your-modal-content')
 
-// Show modal
-modalizer.show()
+	// Create a Modalizer instance
+	const modalizer = new Modalizer({ element })
 
-// Hide modal
-modalizer.hide()
-```
+	// Show modal
+	modalizer.show()
+
+	// Hide modal
+	modalizer.hide()
+	```
 
 ## 🛠️ Configuration
 
@@ -180,46 +187,46 @@ const config: ModalizerConfig = {
 ### Creating custom animations
 
 
-Create your custom animation and assign to css classes
-```css
+1. Create your custom animation and assign to css classes:
+	```css
 
-.fadeIn {
-	animation: fadeIn 0.25s forwards;
-}
-
-.fadeOut {
-	animation: fadeOut 0.25s forwards;
-}
-
-@keyframes fadeIn {
-	0% {
-		opacity: 0;
+	.fadeIn {
+		animation: fadeIn 0.25s forwards;
 	}
-	100% {
-		opacity: 1;
+
+	.fadeOut {
+		animation: fadeOut 0.25s forwards;
 	}
-}
 
-@keyframes fadeOut {
-	0% {
-		opacity: 1;
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
 	}
-	100% {
-		opacity: 0;
+
+	@keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
 	}
-}
-```
+	```
 
-Use created css classes on config object
-```typescript
+2. Use created css classes on config object:
+	```typescript
 
-import { ModalizerConfig } from 'modalizer'
+	import { ModalizerConfig } from 'modalizer'
 
-const config: ModalizerConfig = {
-	animationIn: 'fadeIn',
-	animationOut: 'fadeOut'
-}
-```
+	const config: ModalizerConfig = {
+		animationIn: 'fadeIn',
+		animationOut: 'fadeOut'
+	}
+	```
 
 ### 🔦 Linting
 
