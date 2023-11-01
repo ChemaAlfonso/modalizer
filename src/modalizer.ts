@@ -142,18 +142,18 @@ export class Modalizer {
 	}
 
 	private handleAnimationEvents(e: AnimationEvent) {
-		const { pseudoElement } = e
+		if (e.pseudoElement) return
 
-		if (pseudoElement) return
+		switch (this.modalized.state) {
+			case MODALIZER_STATE.OPENING:
+				this.setAsOpened()
+				break
+			case MODALIZER_STATE.CLOSING:
+				this.setAsClosed()
+				break
 
-		if (this.modalized.state === MODALIZER_STATE.OPENING) {
-			this.setAsOpened()
-			return
-		}
-
-		if (this.modalized.state === MODALIZER_STATE.CLOSING) {
-			this.setAsClosed()
-			return
+			default:
+				break
 		}
 	}
 
