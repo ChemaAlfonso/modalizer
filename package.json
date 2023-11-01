@@ -1,8 +1,15 @@
 {
-  "name": "modalizer",
+  "name": "@chemaalfonso/modalizer",
   "version": "0.0.2",
-  "description": "Native fancy modals",
-  "main": "index.js",
+  "description": "Generate attractive native modals efficiently.",
+  "keywords": [
+    "modal",
+    "dialog",
+    "typescript"
+  ],
+  "homepage": "https://chemaalfonso.github.io/modalizer/",
+  "main": "./dist/modalizer.js",
+  "types": "./dist/modalizer.d.js",
   "scripts": {
     "dev-styles": "sass -w assets/scss/index.scss dist/assets/styles/styles.css",
     "dev": "tsc -w",
@@ -11,17 +18,31 @@
     "remove-builds": "(rm -r dist || true) && (rm -r docs/dist || true)",
     "build": "npm run remove-builds && npm run build-styles && npm run build-script && cp -R dist docs/dist"
   },
-  "author": "Chema Alfonso <hola@chemaalfonso.com>",
+  "author": {
+	"name": "Chema Alfonso",
+	"email": "hola@chemaalfonso.com",
+	"url": "https://github.com/ChemaAlfonso"
+  },
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.5",
     "rollup": "^4.1.5",
     "sass": "^1.69.5",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   },
   "type": "module",
-  "dependencies": {
-    "tslib": "^2.6.2"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChemaAlfonso/modalizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChemaAlfonso/modalizer/issues"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.ts",
+    "dist/**/*.css"
+  ]
 }
