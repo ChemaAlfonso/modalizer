@@ -18,7 +18,7 @@
 	Modalizer is a JavaScript library for creating and managing modals in web applications. Written in TypeScript, it provides an easy way to create modal dialogs with customizable animations and styles.
 </p>
 
-> 🛑 Project is under construction, please wait to V1.0 to use it.
+> 🛑 Project is under construction, please wait to V1.0 to use on your project.
 
 ## ✨ Features
 
