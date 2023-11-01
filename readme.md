@@ -5,13 +5,13 @@
 </h1>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/@chemaalfonso/modalizer"><img src="https://img.shields.io/npm/v/@chemaalfonso/modalizer" alt="NPM version"/></a>
- <a target="_blank" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-TypeScript-FFFFFF?logo=typescript" alt="Typescript"></a>
+<a target="_blank" href="https://www.npmjs.com/package/@chemaalfonso/modalizer"><img src="https://img.shields.io/npm/v/@chemaalfonso/modalizer" alt="NPM version"/></a>
+<a target="_blank" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-TypeScript-FFFFFF?logo=typescript" alt="Typescript"></a>
 <a target="_blank" href="https://sass-lang.com/"><img src="https://img.shields.io/badge/-Sass-pink?logo=sass" alt="Javascript"></a>
 <a target="_blank" href="https://terser.org/"><img src="https://img.shields.io/badge/-Terser-DB3AB3?logo=javascript" alt="Terser"></a>
 <a target="_blank" href="https://rollupjs.org/"><img src="https://img.shields.io/badge/-Rollup-FCAF41?logo=rollupdotjs" alt="Rollup"></a>
-<a href="https://eslint.org/"><img src="https://img.shields.io/badge/-ESLint-4B32C4?logo=eslint" alt="ESLint"/></a>
-<a href="https://prettier.io/"><img src="https://img.shields.io/badge/-Prettier-57B3B5?logo=prettier" alt="Prettier"/></a>
+<a target="_blank" href="https://eslint.org/"><img src="https://img.shields.io/badge/-ESLint-4B32C4?logo=eslint" alt="ESLint"/></a>
+<a target="_blank" href="https://prettier.io/"><img src="https://img.shields.io/badge/-Prettier-57B3B5?logo=prettier" alt="Prettier"/></a>
 </p>
 
 <p align="center">
