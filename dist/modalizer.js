@@ -12,124 +12,102 @@ var MODALIZER_STATE;
 })(MODALIZER_STATE || (MODALIZER_STATE = {}));
 class Modalizer {
     constructor(modalizable) {
-        this.enabledEvents = [];
-        this.modalized = this.modalize(modalizable);
+        this.registeredEvents = [];
+        const { element, trigger, config } = modalizable;
+        this.target = this.wrapContentIntoModalizedTarget(element);
+        this.trigger = trigger;
+        this.config = config ? { ...this.defaultConfig(), ...config } : this.defaultConfig();
+        this.state = MODALIZER_STATE.CLOSED;
         this.initialize();
     }
     show() {
-        if (this.modalized.state !== MODALIZER_STATE.CLOSED)
+        if (this.state !== MODALIZER_STATE.CLOSED)
             return;
-        this.modalized.target.classList.add(this.modalized.config.animationIn);
-        this.modalized.target.showModal();
-        this.modalized.target.setAttribute('opening', '');
-        this.modalized.state = MODALIZER_STATE.OPENING;
+        this.target.classList.add(this.config.animationIn);
+        this.target.showModal();
+        this.target.setAttribute('opening', '');
+        this.state = MODALIZER_STATE.OPENING;
     }
     hide() {
-        if (this.modalized.state !== MODALIZER_STATE.OPENED)
+        if (this.state !== MODALIZER_STATE.OPENED)
             return;
-        this.modalized.target.classList.add(this.modalized.config.animationOut);
-        this.modalized.target.setAttribute('closing', '');
-        this.modalized.state = MODALIZER_STATE.CLOSING;
+        this.target.classList.add(this.config.animationOut);
+        this.target.setAttribute('closing', '');
+        this.state = MODALIZER_STATE.CLOSING;
     }
     destroy() {
-        this.modalized.target.close();
-        this.enabledEvents.forEach(activeEvent => {
+        this.target.close();
+        this.registeredEvents.forEach(activeEvent => {
             const { listener, eventType, action } = activeEvent;
             listener.removeEventListener(eventType, action);
         });
-        this.modalized.target.parentElement?.removeChild(this.modalized.target);
+        this.target.parentElement?.removeChild(this.target);
     }
     // Initializers
-    modalize(modalizable) {
-        const { element, trigger, config } = modalizable;
-        const modalized = {
-            target: this.insertElementIntoModalizedTarget(element),
-            trigger,
-            config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
-            state: MODALIZER_STATE.CLOSED
-        };
-        return modalized;
-    }
-    insertElementIntoModalizedTarget(element) {
-        const modalizerRoot = element?.parentElement || document.body;
+    wrapContentIntoModalizedTarget(content) {
+        const modalizerRoot = content?.parentElement || document.body;
         const modalizedElement = document.createElement('dialog');
         modalizedElement.classList.add('modalizer');
-        modalizerRoot.insertBefore(modalizedElement, element);
-        modalizedElement.appendChild(element);
+        modalizerRoot.insertBefore(modalizedElement, content);
+        modalizedElement.appendChild(content);
         return modalizedElement;
     }
     initialize() {
-        const { target, config } = this.modalized;
-        this.enableEvent(target, 'animationend', this.handleAnimationEvents.bind(this));
-        this.enableEvent(target, 'cancel', this.handleCancelEvents.bind(this));
-        this.enableEvent(document, 'keydown', this.handleKeydownEvents.bind(this));
+        const { target, trigger, config } = this;
+        this.registerEvent(target, 'animationend', this.setStateOnAnimationEnd.bind(this));
+        this.registerEvent(target, 'cancel', this.closeOnCancel.bind(this));
         if (config?.closer)
-            this.enableEvent(config.closer, 'click', this.hide.bind(this));
-        if (this.modalized.trigger)
-            this.enableEvent(this.modalized.trigger, 'click', this.handleClickEvents.bind(this));
-        if (config?.customClassName)
-            target.classList.add(config.customClassName);
-        this.enabledEvents.forEach(activeEvent => {
+            this.registerEvent(config.closer, 'click', this.hide.bind(this));
+        if (trigger)
+            this.registerEvent(trigger, 'click', this.show.bind(this));
+        this.registeredEvents.forEach(activeEvent => {
             const { listener, eventType, action } = activeEvent;
             listener.addEventListener(eventType, action);
         });
-        this.modalized.target.classList.add('modalizer--initialized');
+        if (config?.customClassName)
+            target.classList.add(config.customClassName);
+        this.target.classList.add('modalizer--initialized');
     }
     // Event handlers
-    enableEvent(listener, eventType, action) {
-        this.enabledEvents.push({ listener, eventType, action });
+    registerEvent(listener, eventType, action) {
+        this.registeredEvents.push({ listener, eventType, action });
     }
-    handleClickEvents(e) {
-        const target = e.target;
-        if (!target)
-            return;
-        this.show();
-    }
-    handleKeydownEvents(e) {
-        if (e.code !== 'Escape')
-            return;
-        if (!this.modalized.config.closeOnEscKeyPress)
+    closeOnCancel(e) {
+        e.preventDefault();
+        if (!this.config.closeOnCancelPress)
             return;
         this.hide();
     }
-    handleAnimationEvents(e) {
-        const { pseudoElement } = e;
-        if (pseudoElement)
+    setStateOnAnimationEnd(e) {
+        if (e.pseudoElement)
             return;
-        if (this.modalized.state === MODALIZER_STATE.OPENING) {
-            this.setAsOpened();
-            return;
+        switch (this.state) {
+            case MODALIZER_STATE.OPENING:
+                this.setAsOpened();
+                break;
+            case MODALIZER_STATE.CLOSING:
+                this.setAsClosed();
+                break;
         }
-        if (this.modalized.state === MODALIZER_STATE.CLOSING) {
-            this.setAsClosed();
-            return;
-        }
-    }
-    handleCancelEvents(e) {
-        e.preventDefault();
     }
     // Final state setters
     setAsOpened() {
-        if (this.modalized.state !== MODALIZER_STATE.OPENING)
-            return;
-        this.modalized.target.removeAttribute('opening');
-        this.modalized.state = MODALIZER_STATE.OPENED;
-        this.modalized.target.classList.remove(this.modalized.config.animationIn);
+        this.target.removeAttribute('opening');
+        this.state = MODALIZER_STATE.OPENED;
+        this.target.classList.remove(this.config.animationIn);
     }
     setAsClosed() {
-        if (this.modalized.state !== MODALIZER_STATE.CLOSING)
-            return;
-        this.modalized.target.close();
-        this.modalized.target.removeAttribute('closing');
-        this.modalized.state = MODALIZER_STATE.CLOSED;
-        this.modalized.target.classList.remove(this.modalized.config.animationOut);
+        this.target.close();
+        this.target.removeAttribute('closing');
+        this.state = MODALIZER_STATE.CLOSED;
+        this.target.classList.remove(this.config.animationOut);
     }
     // Default
     defaultConfig() {
         return {
             animationIn: MODALIZER_ANIMATION.FADE_IN,
             animationOut: MODALIZER_ANIMATION.FADE_OUT,
-            closeOnEscKeyPress: true
+            closeOnCancelPress: true
         };
     }
 }export{Modalizer};
