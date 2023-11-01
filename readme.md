@@ -60,8 +60,10 @@ npm i @chemaalfonso/modalizer
 	```
 
 3. Script:
-	```javascript
-	import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js'
+	```html
+ 	<script type="module">
+		import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js'
+	</script>
 	```
 
 ### Import into your project
