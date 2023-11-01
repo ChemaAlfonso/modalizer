@@ -152,8 +152,6 @@ export class Modalizer {
 
 	// Final state setters
 	private setAsOpened() {
-		if (this.state !== MODALIZER_STATE.OPENING) return
-
 		this.target.removeAttribute('opening')
 		this.state = MODALIZER_STATE.OPENED
 
@@ -161,8 +159,6 @@ export class Modalizer {
 	}
 
 	private setAsClosed() {
-		if (this.state !== MODALIZER_STATE.CLOSING) return
-
 		this.target.close()
 		this.target.removeAttribute('closing')
 		this.state = MODALIZER_STATE.CLOSED
