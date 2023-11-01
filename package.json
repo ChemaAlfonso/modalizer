@@ -41,8 +41,6 @@
     "url": "https://github.com/ChemaAlfonso/modalizer/issues"
   },
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.ts",
-    "dist/**/*.css"
+    "dist"
   ]
 }
