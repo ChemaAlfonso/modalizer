@@ -16,8 +16,8 @@ type ModalizerContent = HTMLElement
 type ModalizerCloser = HTMLElement
 
 export interface ModalizerConfig {
-	animationIn: MODALIZER_ANIMATION
-	animationOut: MODALIZER_ANIMATION
+	animationIn: MODALIZER_ANIMATION | string
+	animationOut: MODALIZER_ANIMATION | string
 	closer?: ModalizerCloser
 	closeOnCancelPress: boolean
 	customClassName?: string
