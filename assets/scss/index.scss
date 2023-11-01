@@ -38,12 +38,12 @@
 			@include mixins.fadeOutAnimation;
 		}
 	}
+}
 
-	.fadeIn {
-		@include mixins.fadeInAnimation;
-	}
+.fadeIn {
+	@include mixins.fadeInAnimation;
+}
 
-	.fadeOut {
-		@include mixins.fadeOutAnimation;
-	}
+.fadeOut {
+	@include mixins.fadeOutAnimation;
 }
