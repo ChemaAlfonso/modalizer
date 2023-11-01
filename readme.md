@@ -16,13 +16,14 @@ Modalizer is a TypeScript library for creating and managing modals in web applic
 
 - Native: Keep the native way using native dialog html element.
 - Ease of Use: Implement modals in minutes with a simple and user-friendly API.
+- Keep your rules: Modalizer only modalizes your content but you still have all its control.
 - Quick Customization: Adapt the appearance of your modals to fit your project.
 - Custom HTML Content: Effortlessly load any HTML content into your modals.
 - Compatible animations: Compatible with [Animate.css](https://animate.style/) animations
 - Customizable animations: Make your own and use custom animations
 - Created in TypeScript: Modalizer is designed for use in TypeScript and JavaScript
 	projects.
-- Only 4.3kb
+- Only 3.7kb
 - Responsive: Native elements fits your needs on every screen
 - Free use: MIT licensed
 
@@ -36,23 +37,24 @@ npm i modalizer
 
 ## Usage
 
+Include basic style rules
+```html
+
+<link rel="stylesheet" href="path/to/modalizer.css">
+```
+
 ### Typescript minimal example with HTML trigger
 ```typescript
 import { Modalizer, Modalizable } from 'modalizer'
 
 // Define your modal content and trigger elements
-const modalContent = document.querySelector('your-modal-content')
-const modalTrigger = document.querySelector('your-modal-trigger')
-const modalCloser = document.querySelector('your-modal-closer')
+const element = document.querySelector('your-modal-content')
+const trigger = document.querySelector('your-modal-trigger')
 
 // Create Modalizable objects
-const modalizable: Modalizable = {
-	element: modalContent,
-	trigger: modalTrigger,
-	config: { closer: modalCloser }
-}
+const modalizable: Modalizable = { element, trigger }
 
-// Create a Modalizer instance with an array of Modalizable objects
+// Create a Modalizer instance
 const modalizer = new Modalizer(modalizable)
 ```
 
@@ -62,18 +64,13 @@ const modalizer = new Modalizer(modalizable)
 import { Modalizer } from 'modalizer'
 
 // Define your modal content and trigger elements
-const modalContent = document.querySelector('your-modal-content')
-const modalTrigger = document.querySelector('your-modal-trigger')
-const modalCloser = document.querySelector('your-modal-closer')
+const element = document.querySelector('your-modal-content')
+const trigger = document.querySelector('your-modal-trigger')
 
 // Create Modalizable objects
-const modalizable = {
-	element: modalContent,
-	trigger: modalTrigger,
-	config: { closer: modalCloser }
-}
+const modalizable = { element, trigger }
 
-// Create a Modalizer instance with an array of Modalizable objects
+// Create a Modalizer instance
 const modalizer = new Modalizer(modalizable)
 ```
 
@@ -81,14 +78,11 @@ const modalizer = new Modalizer(modalizable)
 ```typescript
 import { Modalizer, Modalizable } from 'modalizer'
 
-// Define your modal content and trigger elements
-const modalContent = document.querySelector('your-modal-content')
+// Define your modal content
+const element = document.querySelector('your-modal-content')
 
-// Create Modalizable objects
-const modalizable: Modalizable = { element: modalContent }
-
-// Create a Modalizer instance with an array of Modalizable objects
-const modalizer = new Modalizer(modalizable)
+// Create a Modalizer instance
+const modalizer = new Modalizer({ element })
 
 // Show modal
 modalizer.show()
@@ -97,18 +91,113 @@ modalizer.show()
 modalizer.hide()
 ```
 
-### Using custom config
+## Configuration
 
+### Using config object
 ```typescript
 
 import { ModalizerConfig } from 'modalizer'
 
 const config: ModalizerConfig = {
-	animationIn: 'animationInName',
-	animationOut: 'animationOutName',
-	closeOnEscKeyPress: boolean,
-	closer: HTMLElement
-	customClassName: 'CustomizableCssClassName'
+	animationIn: 'myInAnimation', // CSS class name including animation property
+	animationOut: 'myOutAnimation', // CSS class name including animation property
+	closeOnEscKeyPress: boolean, // Enable or disable close on esc behaviour
+	closer: HTMLElement, // HTML element to close modal on click
+	customClassName: 'my-class-name' // CSS class name to apply custom styles
+}
+```
+## Styling 
+
+### Customizing styles
+
+Include a custom class name
+```typescript
+
+import { ModalizerConfig } from 'modalizer'
+
+const config: ModalizerConfig = {
+	customClassName: 'my-class-name',
+	...
+}
+```
+
+Apply your styles
+```css
+.my-class-name {
+	--modalizer-animation-duration: 0.4s;
+	border-radius: 8px;
+}
+
+.my-class-name::backdrop {
+	background: #6749e39f;
+}
+
+```
+## Using animations
+You can use any animation source. The only requeriment is a css class with the animation property and use it on the config object.
+
+### Using [Animate.css](https://animate.style/) animations
+
+Include animate.css rules
+```html
+
+<link rel="stylesheet" href="path/to/animate.css">
+```
+> ⚠️ Modalizer package includes a simplified animate.css version including only the in & out based animations.
+
+Use Animate.css animation class names on config
+```typescript
+
+import { ModalizerConfig } from 'modalizer'
+
+const config: ModalizerConfig = {
+	animationIn: 'lightSpeedInLeft',
+	animationOut: 'flipOutX'
+}
+```
+
+
+### Creating custom animations
+
+
+Create your custom animation and assign to css classes
+```css
+
+.fadeIn {
+	animation: fadeIn 0.25s forwards;
+}
+
+.fadeOut {
+	animation: fadeOut 0.25s forwards;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+```
+
+Use created css classes on config object
+```typescript
+
+import { ModalizerConfig } from 'modalizer'
+
+const config: ModalizerConfig = {
+	animationIn: 'fadeIn',
+	animationOut: 'fadeOut'
 }
 ```
 
