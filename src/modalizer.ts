@@ -18,8 +18,8 @@ type ModalizerCloser = HTMLElement
 export interface ModalizerConfig {
 	animationIn: MODALIZER_ANIMATION | string
 	animationOut: MODALIZER_ANIMATION | string
+	closeOnEscKeyPress: boolean
 	closer?: ModalizerCloser
-	closeOnCancelPress: boolean
 	customClassName?: string
 }
 
@@ -116,7 +116,7 @@ export class Modalizer {
 	private closeOnCancel(e: KeyboardEvent) {
 		e.preventDefault()
 
-		if (!this.config.closeOnCancelPress) return
+		if (!this.config.closeOnEscKeyPress) return
 
 		this.hide()
 	}
@@ -158,7 +158,7 @@ export class Modalizer {
 		return {
 			animationIn: MODALIZER_ANIMATION.FADE_IN,
 			animationOut: MODALIZER_ANIMATION.FADE_OUT,
-			closeOnCancelPress: true
+			closeOnEscKeyPress: true
 		}
 	}
 }
