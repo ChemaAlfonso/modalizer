@@ -13,8 +13,8 @@
   "scripts": {
     "dev:styles": "sass -w assets/scss/index.scss dist/assets/styles/styles.css",
     "dev": "tsc -w",
-	"lint": "eslint",
-	"lint:fix": "eslint --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "build:styles": "sass --no-source-map --style=compressed assets/scss/index.scss dist/css/styles.css && sass --no-source-map --style=compressed assets/scss/animations/animate.scss dist/css/animate.css",
     "build:script": "rollup --compact -c rollup.config.js",
     "remove:builds": "(rm -r dist || true) && (rm -r docs/dist || true)",
@@ -43,7 +43,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChemaAlfonso/modalizer.git"
+    "url": "git+https://github.com/ChemaAlfonso/modalizer.git"
   },
   "bugs": {
     "url": "https://github.com/ChemaAlfonso/modalizer/issues"
