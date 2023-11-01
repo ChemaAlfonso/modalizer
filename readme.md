@@ -1,18 +1,23 @@
+
+
+<h1 align="center">
+  Modalizer
+</h1>
 <p align="center">
- <a target="_blank" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-TypeScript-FFFFFF?logo=typescript"></a>
-<a target="_blank" href="https://sass-lang.com/"><img src="https://img.shields.io/badge/-Sass-pink?logo=sass"></a>
-<a target="_blank" href="https://terser.org/"><img src="https://img.shields.io/badge/-Terser-00299F?logo=javascript"></a>
-<a target="_blank" href="https://rollupjs.org/"><img src="https://img.shields.io/badge/-Rollup-FCAF41?logo=rollupdotjs"></a>
-<a target="_blank" href="https://www.npmjs.com/"><img src="https://img.shields.io/badge/-Npmjs-231F20?logo=npm"></a>
+<a href="https://www.npmjs.com/package/@chemaalfonso/modalizer"><img src="https://img.shields.io/npm/v/@chemaalfonso/modalizer" alt="NPM version"/></a>
+ <a target="_blank" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-TypeScript-FFFFFF?logo=typescript" alt="Typescript"></a>
+<a target="_blank" href="https://sass-lang.com/"><img src="https://img.shields.io/badge/-Sass-pink?logo=sass" alt="Javascript"></a>
+<a target="_blank" href="https://terser.org/"><img src="https://img.shields.io/badge/-Terser-DB3AB3?logo=javascript" alt="Terser"></a>
+<a target="_blank" href="https://rollupjs.org/"><img src="https://img.shields.io/badge/-Rollup-FCAF41?logo=rollupdotjs" alt="Rollup"></a>
+<a href="https://eslint.org/"><img src="https://img.shields.io/badge/-ESLint-4B32C4?logo=eslint" alt="ESLint"/></a>
+<a href="https://prettier.io/"><img src="https://img.shields.io/badge/-Prettier-57B3B5?logo=prettier" alt="Prettier"/></a>
 </p>
 
-# Modalizer
+<p align="center">
+	Modalizer is a TypeScript library for creating and managing modals in web applications. It provides an easy way to create modal dialogs with customizable animations and styles.
+</p>
 
-Modalizer is a TypeScript library for creating and managing modals in web applications. It provides an easy way to create modal dialogs with customizable animations and styles.
-
-[View working example](https://chemaalfonso.github.io/modalizer/)
-
-## 🚀 Features
+## ✨ Features
 
 - Native: Keep the native way using native dialog html element.
 - Ease of Use: Implement modals in minutes with a simple and user-friendly API.
@@ -28,7 +33,10 @@ Modalizer is a TypeScript library for creating and managing modals in web applic
 - Responsive: Native elements fits your needs on every screen
 - Free use: MIT licensed
 
-## 📲 Installation
+## 👀 Demo
+[View working example](https://chemaalfonso.github.io/modalizer/)
+
+## ⚙️  Installation
 
 To use Modalizer in your project, you can install it via npm:
 
@@ -100,13 +108,24 @@ modalizer.hide()
 import { ModalizerConfig } from 'modalizer'
 
 const config: ModalizerConfig = {
-	animationIn: 'myInAnimation', // CSS class name including animation property
-	animationOut: 'myOutAnimation', // CSS class name including animation property
-	closeOnEscKeyPress: boolean, // Enable or disable close on esc behaviour
-	closer: HTMLElement, // HTML element to close modal on click
-	customClassName: 'my-class-name' // CSS class name to apply custom styles
+	animationIn: 'myInAnimation',
+	animationOut: 'myOutAnimation',
+	closeOnEscKeyPress: true,
+	closer: myHtmlCloserElement,
+	customClassName: 'my-class-name'
 }
 ```
+### Config options reference
+| Property Name        | Default Value      | Description                                     					|
+|----------------------|--------------------|-------------------------------------------------------------------|
+| animationIn          | `'fadeIn'`         | The css class name with the animation for modal entry.			|
+| animationOut         | `'fadeOut'`        | The css class name with the animation for modal exit.				|
+| closeOnEscKeyPress   | `true`             | Controls whether the modal is closed when pressing "Cancel." 		|
+| closer               | `undefined`        | `Optional`: The HTML element to close the modal. 					|
+| customClassName      | `undefined`        | `Optional`: Allows setting a CSS class to customize the modal. 	|
+
+
+
 ## 🎨 Styling 
 
 ### Customizing styles
@@ -201,6 +220,20 @@ const config: ModalizerConfig = {
 	animationOut: 'fadeOut'
 }
 ```
+
+### 🔦 Linting
+
+- `npm run lint`: Run linter
+- `npm run lint:fix`: Fix lint issues
+
+### 🔨 Dev
+
+- `npm run dev`: Run tsc transpiler with watcher
+- `npm run dev:styles`: Run styles compiler with watcher
+
+### 📚 Build
+
+- `npm run build`: Run project builder
 
 ## 📄 License
 Modalizer is licensed under the MIT [LICENSE](LICENSE). See the LICENSE file for details.
