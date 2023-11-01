@@ -12,7 +12,7 @@ Modalizer is a TypeScript library for creating and managing modals in web applic
 
 [View working example](https://chemaalfonso.github.io/modalizer/)
 
-## Features
+## 🚀 Features
 
 - Native: Keep the native way using native dialog html element.
 - Ease of Use: Implement modals in minutes with a simple and user-friendly API.
@@ -24,19 +24,19 @@ Modalizer is a TypeScript library for creating and managing modals in web applic
 - Customizable animations: Make your own and use custom animations
 - Created in TypeScript: Modalizer is designed for use in TypeScript and JavaScript
 	projects.
-- Only 3.7kb
+- Only 3.3kb minimified incuding styles
 - Responsive: Native elements fits your needs on every screen
 - Free use: MIT licensed
 
-## Installation
+## 📲 Installation
 
 To use Modalizer in your project, you can install it via npm:
 
 ```bash
-npm i modalizer
+npm i @chemaalfonso/modalizer
 ```
 
-## Usage
+## 📝 Usage
 
 Include basic style rules
 ```html
@@ -92,7 +92,7 @@ modalizer.show()
 modalizer.hide()
 ```
 
-## Configuration
+## 🛠️ Configuration
 
 ### Using config object
 ```typescript
@@ -107,7 +107,7 @@ const config: ModalizerConfig = {
 	customClassName: 'my-class-name' // CSS class name to apply custom styles
 }
 ```
-## Styling 
+## 🎨 Styling 
 
 ### Customizing styles
 
@@ -134,7 +134,7 @@ Apply your styles
 }
 
 ```
-## Using animations
+## 💃 Using animations
 You can use any animation source. The only requeriment is a css class with the animation property and use it on the config object.
 
 ### Using [Animate.css](https://animate.style/) animations
@@ -202,9 +202,9 @@ const config: ModalizerConfig = {
 }
 ```
 
-## License
+## 📄 License
 Modalizer is licensed under the MIT [LICENSE](LICENSE). See the LICENSE file for details.
 
 
-## Contact
+## 📱 Contact
 If you have any questions or suggestions, feel free to open an issue.
