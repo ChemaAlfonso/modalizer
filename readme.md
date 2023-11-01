@@ -49,18 +49,35 @@ npm i @chemaalfonso/modalizer
 
 ## 📝 Usage
 
-1. Include basic style rules:
+### Direct using from cdn
 
-	### Using link on HTML
+1. Basic styles:
 	```html
-	<link rel="stylesheet" href="path/to/modalizer.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/css/styles.css">
 	```
 
-	### Using import
-	```css
-	import "@chemaalfonso/modalizer/dist/css/styles.css";
+2. (Optional) Extra animations:
+	```html
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/css/animate.css">
 	```
-2. Import & use:
+
+3. Script:
+	```html
+	<script src="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/modalizer.min.js"></script>
+	```
+
+### Import into your project
+1. Include basic style rules:
+	```js
+	import '@chemaalfonso/modalizer/dist/css/styles.css';
+	```
+
+2. (Optional) Include extra animations:
+	```js
+	import '@chemaalfonso/modalizer/dist/css/animate.css';
+	```
+
+3. Import & use lib:
 
 	### Typescript minimal example with HTML trigger
 	```typescript
@@ -126,13 +143,13 @@ const config: ModalizerConfig = {
 }
 ```
 ### Config options reference
-| Property Name        | Default Value      | Description                                     					|
-|----------------------|--------------------|-------------------------------------------------------------------|
-| animationIn          | `'fadeIn'`         | The css class name with the animation for modal entry.			|
-| animationOut         | `'fadeOut'`        | The css class name with the animation for modal exit.				|
-| closeOnEscKeyPress   | `true`             | Controls whether the modal is closed when pressing "Cancel." 		|
-| closer               | `undefined`        | `Optional`: The HTML element to close the modal. 					|
-| customClassName      | `undefined`        | `Optional`: Allows setting a CSS class to customize the modal. 	|
+| Property Name        | Default Value      			| Description                                     					|
+|----------------------|--------------------------------|-------------------------------------------------------------------|
+| animationIn          | `'modalizer-fadeIn'`         	| The css class name with the animation for modal entry.			|
+| animationOut         | `'modalizer-fadeOut'`        	| The css class name with the animation for modal exit.				|
+| closeOnEscKeyPress   | `true`             			| Controls whether the modal is closed when pressing "Cancel." 		|
+| closer               | `undefined`        			| `Optional`: The HTML element to close the modal. 					|
+| customClassName      | `undefined`        			| `Optional`: Allows setting a CSS class to customize the modal. 	|
 
 
 
