@@ -61,7 +61,7 @@ npm i @chemaalfonso/modalizer
 
 3. Script:
 	```javascript
-	import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.js'
+	import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js'
 	```
 
 ### Import into your project
