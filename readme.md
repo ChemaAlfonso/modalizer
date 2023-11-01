@@ -53,17 +53,17 @@ npm i @chemaalfonso/modalizer
 
 1. Basic styles:
 	```html
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/css/styles.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/styles.css">
 	```
 
 2. (Optional) Extra animations:
 	```html
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/css/animate.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/animate.css">
 	```
 
 3. Script:
 	```html
-	<script src="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer@0.0.3/dist/modalizer.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js"></script>
 	```
 
 ### Import into your project
