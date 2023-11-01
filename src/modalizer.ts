@@ -30,7 +30,7 @@ export interface Modalizable {
 }
 
 export class Modalizer {
-	private enabledEvents: { listener: HTMLElement | Document; eventType: string; action: (e: any) => void }[] = []
+	private registeredEvents: { listener: HTMLElement | Document; eventType: string; action: (e: any) => void }[] = []
 	private target: ModalizerTarget
 	private trigger?: ModalizerTrigger
 	private config: ModalizerConfig
@@ -68,7 +68,7 @@ export class Modalizer {
 
 	destroy() {
 		this.target.close()
-		this.enabledEvents.forEach(activeEvent => {
+		this.registeredEvents.forEach(activeEvent => {
 			const { listener, eventType, action } = activeEvent
 			listener.removeEventListener(eventType, action)
 		})
@@ -91,26 +91,26 @@ export class Modalizer {
 	private initialize(): void {
 		const { target, trigger, config } = this
 
-		this.enableEvent(target, 'animationend', this.setStateOnAnimationEnd.bind(this))
-		this.enableEvent(target, 'cancel', this.closeOnCancel.bind(this))
+		this.registerEvent(target, 'animationend', this.setStateOnAnimationEnd.bind(this))
+		this.registerEvent(target, 'cancel', this.closeOnCancel.bind(this))
 
-		if (config?.closer) this.enableEvent(config.closer, 'click', this.hide.bind(this))
+		if (config?.closer) this.registerEvent(config.closer, 'click', this.hide.bind(this))
 
-		if (trigger) this.enableEvent(trigger, 'click', this.show.bind(this))
+		if (trigger) this.registerEvent(trigger, 'click', this.show.bind(this))
 
-		if (config?.customClassName) target.classList.add(config.customClassName)
-
-		this.enabledEvents.forEach(activeEvent => {
+		this.registeredEvents.forEach(activeEvent => {
 			const { listener, eventType, action } = activeEvent
 			listener.addEventListener(eventType, action)
 		})
+
+		if (config?.customClassName) target.classList.add(config.customClassName)
 
 		this.target.classList.add('modalizer--initialized')
 	}
 
 	// Event handlers
-	private enableEvent(listener: HTMLElement | Document, eventType: string, action: (e: any) => void) {
-		this.enabledEvents.push({ listener, eventType, action })
+	private registerEvent(listener: HTMLElement | Document, eventType: string, action: (e: any) => void) {
+		this.registeredEvents.push({ listener, eventType, action })
 	}
 
 	private closeOnCancel(e: KeyboardEvent) {
