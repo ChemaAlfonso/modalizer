@@ -78,7 +78,7 @@ export class Modalizer {
 		const { element, trigger, config } = modalizable
 
 		const modalized: Modalized = {
-			target: this.insertElementIntoModalizedTarget(element),
+			target: this.wrapContentIntoModalizedTarget(element),
 			trigger,
 			config: config ? { ...this.defaultConfig(), ...config } : this.defaultConfig(),
 			state: MODALIZER_STATE.CLOSED
@@ -87,14 +87,14 @@ export class Modalizer {
 		return modalized
 	}
 
-	private insertElementIntoModalizedTarget(element: HTMLElement): ModalizerTarget {
-		const modalizerRoot = element?.parentElement || document.body
+	private wrapContentIntoModalizedTarget(content: ModalizerContent): ModalizerTarget {
+		const modalizerRoot = content?.parentElement || document.body
 
 		const modalizedElement = document.createElement('dialog')
 		modalizedElement.classList.add('modalizer')
 
-		modalizerRoot.insertBefore(modalizedElement, element)
-		modalizedElement.appendChild(element)
+		modalizerRoot.insertBefore(modalizedElement, content)
+		modalizedElement.appendChild(content)
 
 		return modalizedElement
 	}
