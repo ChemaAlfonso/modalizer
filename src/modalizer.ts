@@ -19,7 +19,7 @@ export interface ModalizerConfig {
 	animationIn: MODALIZER_ANIMATION
 	animationOut: MODALIZER_ANIMATION
 	closer?: ModalizerCloser
-	closeOnEscKeyPress: boolean
+	closeOnCancelPress: boolean
 	customClassName?: string
 }
 
@@ -89,15 +89,14 @@ export class Modalizer {
 	}
 
 	private initialize(): void {
-		const { target, config } = this
+		const { target, trigger, config } = this
 
-		this.enableEvent(target, 'animationend', this.handleAnimationEvents.bind(this))
-		this.enableEvent(target, 'cancel', this.handleCancelEvents.bind(this))
-		this.enableEvent(document, 'keydown', this.handleKeydownEvents.bind(this))
+		this.enableEvent(target, 'animationend', this.setStateOnAnimationEnd.bind(this))
+		this.enableEvent(target, 'cancel', this.closeOnCancel.bind(this))
 
 		if (config?.closer) this.enableEvent(config.closer, 'click', this.hide.bind(this))
 
-		if (this.trigger) this.enableEvent(this.trigger, 'click', this.handleClickEvents.bind(this))
+		if (trigger) this.enableEvent(trigger, 'click', this.show.bind(this))
 
 		if (config?.customClassName) target.classList.add(config.customClassName)
 
@@ -114,25 +113,15 @@ export class Modalizer {
 		this.enabledEvents.push({ listener, eventType, action })
 	}
 
-	private handleClickEvents(e: MouseEvent) {
-		const target = e.target as HTMLElement
-
-		if (!target) return
-
-		this.show()
-	}
-
-	private handleCancelEvents(e: Event) {
+	private closeOnCancel(e: KeyboardEvent) {
 		e.preventDefault()
-	}
 
-	private handleKeydownEvents(e: KeyboardEvent) {
-		if (e.code !== 'Escape' || !this.config.closeOnEscKeyPress) return
+		if (!this.config.closeOnCancelPress) return
 
 		this.hide()
 	}
 
-	private handleAnimationEvents(e: AnimationEvent) {
+	private setStateOnAnimationEnd(e: AnimationEvent) {
 		if (e.pseudoElement) return
 
 		switch (this.state) {
@@ -169,7 +158,7 @@ export class Modalizer {
 		return {
 			animationIn: MODALIZER_ANIMATION.FADE_IN,
 			animationOut: MODALIZER_ANIMATION.FADE_OUT,
-			closeOnEscKeyPress: true
+			closeOnCancelPress: true
 		}
 	}
 }
