@@ -37,85 +37,65 @@
 ## 👀 Demo
 [View working example](https://chemaalfonso.github.io/modalizer/)
 
-## ⚙️  Installation
+## ⚙️ Installation
 
-To use Modalizer in your project, you can install it via npm:
+To use Modalizer in your project, you can:
 
+### Direct use from cdn
+1. Basic styles:
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/styles.min.css">
+```
+
+2. (Optional) Extra animations:
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/animate.min.css">
+```
+
+3. Script:
+```html
+    <script type="module">
+        import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js'
+    </script>
+```
+
+### Install via npm
 ```bash
 npm i @chemaalfonso/modalizer
 ```
 
 ## 📝 Usage
 
-### Direct using from cdn
-
-1. Basic styles:
-	```html
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/styles.css">
-	```
-
-2. (Optional) Extra animations:
-	```html
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/css/animate.css">
-	```
-
-3. Script:
-	```html
- 	<script type="module">
-		import { Modalizer } from 'https://cdn.jsdelivr.net/npm/@chemaalfonso/modalizer/dist/modalizer.min.js'
-	</script>
-	```
-
 ### Import into your project
-1. Include basic style rules:
+1. Include style rules:
 	```js
+    // Basic css styles with fade in & out default animations
 	import '@chemaalfonso/modalizer/dist/css/styles.css';
-	```
 
-2. (Optional) Include extra animations:
-	```js
+    // (Optional) Extra animate.css animations
 	import '@chemaalfonso/modalizer/dist/css/animate.css';
 	```
 
-3. Import & use lib:
+2. Import & use script:
 
-	### Typescript minimal example with HTML trigger
+	### Minimal example with HTML trigger
 	```typescript
-	import { Modalizer, Modalizable } from 'modalizer'
+	import { Modalizer, Modalizable } from '@chemaalfonso/modalizer'
 
 	// Define your modal content and trigger elements
-	const element = document.querySelector('your-modal-content')
-	const trigger = document.querySelector('your-modal-trigger')
-
-	// Create Modalizable objects
-	const modalizable: Modalizable = { element, trigger }
+	const element = document.querySelector('your-modal-content') as HTMLElement
+	const trigger = document.querySelector('your-modal-trigger') as HTMLElement
 
 	// Create a Modalizer instance
-	const modalizer = new Modalizer(modalizable)
-	```
-
-	### JavaScript minimal example with HTML trigger
-
-	```javascript
-	import { Modalizer } from 'modalizer'
-
-	// Define your modal content and trigger elements
-	const element = document.querySelector('your-modal-content')
-	const trigger = document.querySelector('your-modal-trigger')
-
-	// Create Modalizable objects
-	const modalizable = { element, trigger }
-
-	// Create a Modalizer instance
-	const modalizer = new Modalizer(modalizable)
+	const modalizer = new Modalizer({ element, trigger })
 	```
 
 	### Programatic modal invocation
 	```typescript
-	import { Modalizer, Modalizable } from 'modalizer'
+	import { Modalizer, Modalizable } from '@chemaalfonso/modalizer'
 
 	// Define your modal content
-	const element = document.querySelector('your-modal-content')
+	const element = document.querySelector('your-modal-content') as HTMLElement
 
 	// Create a Modalizer instance
 	const modalizer = new Modalizer({ element })
@@ -132,7 +112,7 @@ npm i @chemaalfonso/modalizer
 ### Using config object
 ```typescript
 
-import { ModalizerConfig } from 'modalizer'
+import { ModalizerConfig } from '@chemaalfonso/modalizer'
 
 const config: ModalizerConfig = {
 	animationIn: 'myInAnimation',
@@ -160,7 +140,7 @@ const config: ModalizerConfig = {
 Include a custom class name
 ```typescript
 
-import { ModalizerConfig } from 'modalizer'
+import { ModalizerConfig } from '@chemaalfonso/modalizer'
 
 const config: ModalizerConfig = {
 	customClassName: 'my-class-name',
@@ -186,20 +166,21 @@ You can use any animation source. The only requeriment is a css class with the a
 ### Using [Animate.css](https://animate.style/) animations
 
 Include animate.css rules
-```html
-
-<link rel="stylesheet" href="path/to/animate.css">
+```js
+import '@chemaalfonso/modalizer/dist/css/animate.css';
 ```
+
 > ⚠️ Modalizer package includes a simplified animate.css version including only the in & out based animations.
 
 Use Animate.css animation class names on config
 ```typescript
 
-import { ModalizerConfig } from 'modalizer'
+import { ModalizerConfig } from '@chemaalfonso/modalizer'
+import { MODALIZER_ANIMATE_ANIMATION_IN, MODALIZER_ANIMATE_ANIMATION_OUT } from '@chemaalfonso/modalizer/dist/animateAnimations'
 
 const config: ModalizerConfig = {
-	animationIn: 'lightSpeedInLeft',
-	animationOut: 'flipOutX'
+	animationIn: MODALIZER_ANIMATE_ANIMATION_IN.LIGHTSPEED_IN_LEFT,
+	animationOut: MODALIZER_ANIMATE_ANIMATION_OUT.FLIP_OUT_X
 }
 ```
 
@@ -240,7 +221,7 @@ const config: ModalizerConfig = {
 2. Use created css classes on config object:
 	```typescript
 
-	import { ModalizerConfig } from 'modalizer'
+	import { ModalizerConfig } from '@chemaalfonso/modalizer'
 
 	const config: ModalizerConfig = {
 		animationIn: 'fadeIn',
